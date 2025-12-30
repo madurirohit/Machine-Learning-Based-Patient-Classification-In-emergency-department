@@ -1,0 +1,61 @@
+{% extends 'admins/admin_base.html' %}
+{% block contents %} 
+
+<section id="intro">
+    <div class="container intro-text">
+        <footer class="footer_wrapper" id="contact">
+            <div class="container">
+                <section class="page_section contact" id="contact">
+                    <p>
+                    <h3 align="center" style="color:white;">View Registered User Details</h3></p><br>
+                    <table class="table table-bordered bg-light text-dark">
+                        <thead>
+                        <tr style="color:red;font-weight:bold;">
+                            <th>S.No</th>
+                            <th>Name</th>
+                            <th>Login ID</th>
+                            <th>Mobile</th>
+                            <th>Email</th>
+                            <th>Locality</th>
+                            <th>Status</th>
+                            <th>Activate / Deactivate</th>
+                            <th>Delete</th> <!-- New column -->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for i in data %}
+                        <tr style="color:red;font-weight:bold;">
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ i.name }}</td>
+                            <td>{{ i.loginid }}</td>
+                            <td>{{ i.mobile }}</td>
+                            <td>{{ i.email }}</td>
+                            <td>{{ i.locality }}</td>
+                            <td>{{ i.status }}</td>
+
+                            <!-- Activate / Deactivate Button -->
+                            {% if i.status == 'waiting' %}
+                                <td><a class="btn btn-success btn-sm" href="/AdminActivaUsers/?uid={{ i.id }}">Activate</a></td>
+                            {% elif i.status == 'activated' %}
+                                <td><a class="btn btn-warning btn-sm" href="/AdmindeActivaUsers/?uid={{ i.id }}">Deactivate</a></td>
+                            {% endif %}
+
+                            <!-- Delete Button -->
+                            <td>
+                                <a class="btn btn-danger btn-sm" 
+                                   href="/AdminDeleteUser/?uid={{ i.id }}"
+                                   onclick="return confirm('Are you sure you want to delete this user?');">
+                                   Delete
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </footer>
+    </div>
+</section>
+
+{% endblock %}
